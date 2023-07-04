@@ -42,6 +42,8 @@ public class KlijentLoginForma extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        usernameTxt.setText("dveljkovic");
+
         prijavaButton.setText("Prijava");
         prijavaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,6 +54,8 @@ public class KlijentLoginForma extends javax.swing.JFrame {
         jLabel1.setText("Korisnicko ime:");
 
         jLabel2.setText("Lozinka:");
+
+        passwordTxt.setText("dimitrije123");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,6 +111,7 @@ public class KlijentLoginForma extends javax.swing.JFrame {
         if (stomatolog == null) {
             JOptionPane.showMessageDialog(this, "Neuspesno prijavljivanje!");
         } else {
+            JOptionPane.showMessageDialog(this, "Uspesno prijavljivanje!");
             KlijentskaForma kf = new KlijentskaForma(stomatolog);
             kf.setVisible(true);
             this.setVisible(false);

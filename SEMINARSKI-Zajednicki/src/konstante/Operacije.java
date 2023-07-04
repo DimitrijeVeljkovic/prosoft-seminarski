@@ -12,4 +12,7 @@ public interface Operacije {
     public static int LOGIN = 1;
     public static int VRATI_PACIJENTE = 2;
     public static int VRATI_POMOCNIKE_ZA_STOMATOLOGA = 3;
+    public static int PRETRAZI_PACIJENTE = 4;
+    public static int PRETRAZI_POMOCNIKE_ZA_STOMATOLOGA = 5;
+    public static int UNESI_PACIJENTA = 6;
 }

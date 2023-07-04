@@ -7,6 +7,7 @@ package niti;
 import domen.Pacijent;
 import domen.Pomocnik;
 import domen.Stomatolog;
+import helperi.PretragaPomocnika;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -50,6 +51,16 @@ public class ObradaZahtevaNit extends Thread {
                     int stomatologId = (int) kz.getParametar();
                     ArrayList<Pomocnik> pomocnici = Kontroler.getInstance().vratiPomocnikeZaStomatologa(stomatologId);
                     so.setOdgovor(pomocnici);
+                    break;
+                case Operacije.PRETRAZI_PACIJENTE:
+                    String kriterijumPacijent = (String) kz.getParametar();
+                    ArrayList<Pacijent> pacijentiPretraga = Kontroler.getInstance().pretraziPacijente(kriterijumPacijent);
+                    so.setOdgovor(pacijentiPretraga);
+                    break;
+                case Operacije.PRETRAZI_POMOCNIKE_ZA_STOMATOLOGA:
+                    PretragaPomocnika pp = (PretragaPomocnika) kz.getParametar();
+                    ArrayList<Pomocnik> pomocniciPretraga = Kontroler.getInstance().pretraziPomocnike(pp);
+                    so.setOdgovor(pomocniciPretraga);
                     break;
             }
             

@@ -7,6 +7,7 @@ package baza;
 import domen.Pacijent;
 import domen.Pomocnik;
 import domen.Stomatolog;
+import helperi.PretragaPomocnika;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -111,6 +112,56 @@ public class DBBroker {
         try {
             PreparedStatement ps = konekcija.prepareStatement(upit);
             ps.setInt(1, stomatologId);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                pomocnici.add(
+                        new Pomocnik(
+                                rs.getInt("pomocnikId"),
+                                rs.getString("ime"),
+                                rs.getString("prezime"),
+                                rs.getString("jmbg"),
+                                null
+                        )
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return pomocnici;
+    }
+
+    public ArrayList<Pacijent> pretraziPacijente(String kriterijumPacijent) {
+        String upit = "SELECT * FROM Pacijent WHERE ime LIKE ? OR prezime LIKE ?";
+        ArrayList<Pacijent> pacijenti = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps = konekcija.prepareStatement(upit);
+            ps.setString(1, "%" + kriterijumPacijent + "%");
+            ps.setString(2, "%" + kriterijumPacijent + "%");
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                pacijenti.add(new Pacijent(rs.getInt("pacijentId"), rs.getString("ime"), rs.getString("prezime")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return pacijenti;
+    }
+
+    public ArrayList<Pomocnik> pretraziPomocnike(PretragaPomocnika pp) {
+        String upit = "SELECT * FROM Pomocnik WHERE stomatologId = ? AND ( ime LIKE ? OR prezime LIKE ? OR jmbg LIKE ? )";
+        ArrayList<Pomocnik> pomocnici = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps = konekcija.prepareStatement(upit);
+            ps.setInt(1, pp.getStomatologId());
+            ps.setString(2, "%" + pp.getKriterijumPretrage() + "%");
+            ps.setString(3, "%" + pp.getKriterijumPretrage() + "%");
+            ps.setString(4, "%" + pp.getKriterijumPretrage() + "%");
             ResultSet rs = ps.executeQuery();
             
             while (rs.next()) {

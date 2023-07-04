@@ -7,7 +7,9 @@ package forme;
 import domen.Pacijent;
 import domen.Pomocnik;
 import domen.Stomatolog;
+import helperi.PretragaPomocnika;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 import konstante.Operacije;
 import modeli.ModelTabelePacijent;
@@ -65,6 +67,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
 
         jLabel1.setText("Prijavljeni stomatolog: ");
 
+        prijavljeniStomatologLbl.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         prijavljeniStomatologLbl.setText("Ime i Prezime");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Pacijenti"));
@@ -83,6 +86,11 @@ public class KlijentskaForma extends javax.swing.JFrame {
         jScrollPane1.setViewportView(pacijentiTbl);
 
         dodajPacijentaButton.setText("Dodaj pacijenta");
+        dodajPacijentaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dodajPacijentaButtonActionPerformed(evt);
+            }
+        });
 
         pretraziPacijenteButton.setText("Pretrazi pacijente");
         pretraziPacijenteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -138,6 +146,11 @@ public class KlijentskaForma extends javax.swing.JFrame {
         jScrollPane2.setViewportView(pomocniciTbl);
 
         pretraziPomocnikeButton.setText("Pretrazi pomocnike");
+        pretraziPomocnikeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pretraziPomocnikeButtonActionPerformed(evt);
+            }
+        });
 
         dodajPomocnikaButton.setText("Dodaj pomocnika");
 
@@ -189,6 +202,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(prijavljeniStomatologLbl)
@@ -214,7 +228,44 @@ public class KlijentskaForma extends javax.swing.JFrame {
 
     private void pretraziPacijenteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pretraziPacijenteButtonActionPerformed
         String kriterijumPretrage = pretraziPacijenteTxt.getText();
+        
+        KlijentskiZahtev kz = new KlijentskiZahtev(Operacije.PRETRAZI_PACIJENTE, kriterijumPretrage);
+        Komunikacija.getInstance().posaljiZahtev(kz);
+        ServerskiOdgovor so = Komunikacija.getInstance().primiOdgovor();
+        
+        ArrayList<Pacijent> pacijenti = (ArrayList<Pacijent>) so.getOdgovor();
+        ((ModelTabelePacijent) pacijentiTbl.getModel()).postaviPacijente(pacijenti);
+        
+        if (!pacijenti.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sistem je nasao pacijente po zadatoj vrednosti!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje pacijente po zadatoj vrednosti!");
+        }
     }//GEN-LAST:event_pretraziPacijenteButtonActionPerformed
+
+    private void pretraziPomocnikeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pretraziPomocnikeButtonActionPerformed
+        String kriterijumPretrage = pretraziPomocnikeTxt.getText();
+        PretragaPomocnika pp = new PretragaPomocnika(stomatolog.getStomatologId(), kriterijumPretrage);
+        
+        KlijentskiZahtev kz = new KlijentskiZahtev(Operacije.PRETRAZI_POMOCNIKE_ZA_STOMATOLOGA, pp);
+        Komunikacija.getInstance().posaljiZahtev(kz);
+        ServerskiOdgovor so = Komunikacija.getInstance().primiOdgovor();
+        
+        ArrayList<Pomocnik> pomocnici = (ArrayList<Pomocnik>) so.getOdgovor();
+        ((ModelTabelePomocnik) pomocniciTbl.getModel()).postaviPomocnike(pomocnici);
+        
+        if (!pomocnici.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sistem je nasao pomocnike po zadatoj vrednosti!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje pomocnike po zadatoj vrednosti!");
+        }
+        
+    }//GEN-LAST:event_pretraziPomocnikeButtonActionPerformed
+
+    private void dodajPacijentaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dodajPacijentaButtonActionPerformed
+        PacijentDialog pd = new PacijentDialog(this, false);
+        pd.setVisible(true);
+    }//GEN-LAST:event_dodajPacijentaButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton dodajPacijentaButton;
@@ -248,6 +299,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
         KlijentskiZahtev kz = new KlijentskiZahtev(Operacije.VRATI_PACIJENTE, null);
         Komunikacija.getInstance().posaljiZahtev(kz);
         ServerskiOdgovor so = Komunikacija.getInstance().primiOdgovor();
+        
         ArrayList<Pacijent> pacijenti = (ArrayList<Pacijent>) so.getOdgovor();
         ((ModelTabelePacijent) pacijentiTbl.getModel()).postaviPacijente(pacijenti);
     }
@@ -256,6 +308,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
         KlijentskiZahtev kz = new KlijentskiZahtev(Operacije.VRATI_POMOCNIKE_ZA_STOMATOLOGA, stomatolog.getStomatologId());
         Komunikacija.getInstance().posaljiZahtev(kz);
         ServerskiOdgovor so = Komunikacija.getInstance().primiOdgovor();
+        
         ArrayList<Pomocnik> pomocnici = (ArrayList<Pomocnik>) so.getOdgovor();
         ((ModelTabelePomocnik) pomocniciTbl.getModel()).postaviPomocnike(pomocnici);
     }

@@ -8,6 +8,7 @@ import baza.DBBroker;
 import domen.Pacijent;
 import domen.Pomocnik;
 import domen.Stomatolog;
+import helperi.PretragaPomocnika;
 import java.util.ArrayList;
 
 /**
@@ -51,6 +52,24 @@ public class Kontroler {
         dbb.ucitajDrajver();
         dbb.otvoriKonekciju();
         ArrayList<Pomocnik> pomocnici = dbb.vratiPomocnikeZaStomatologa(stomatologId);
+        dbb.zatvoriKonekciju();
+        
+        return pomocnici;
+    }
+
+    public ArrayList<Pacijent> pretraziPacijente(String kriterijumPacijent) {
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        ArrayList<Pacijent> pacijenti = dbb.pretraziPacijente(kriterijumPacijent);
+        dbb.zatvoriKonekciju();
+        
+        return pacijenti;
+    }
+
+    public ArrayList<Pomocnik> pretraziPomocnike(PretragaPomocnika pp) {
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        ArrayList<Pomocnik> pomocnici = dbb.pretraziPomocnike(pp);
         dbb.zatvoriKonekciju();
         
         return pomocnici;
