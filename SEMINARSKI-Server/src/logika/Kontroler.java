@@ -5,6 +5,10 @@
 package logika;
 
 import baza.DBBroker;
+import domen.Pacijent;
+import domen.Pomocnik;
+import domen.Stomatolog;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,6 +27,33 @@ public class Kontroler {
             instance = new Kontroler();
         }
         return instance;
+    }
+
+    public Stomatolog vratiPrijavljenogStomatologa(Stomatolog sLogin) {
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        Stomatolog s = dbb.vratiPrijavljenogStomatologa(sLogin);
+        dbb.zatvoriKonekciju();
+        
+        return s;
+    }
+
+    public ArrayList<Pacijent> vratiPacijente() {
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        ArrayList<Pacijent> pacijenti = dbb.vratiPacijente();
+        dbb.zatvoriKonekciju();
+        
+        return pacijenti;
+    }
+
+    public ArrayList<Pomocnik> vratiPomocnikeZaStomatologa(int stomatologId) {
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        ArrayList<Pomocnik> pomocnici = dbb.vratiPomocnikeZaStomatologa(stomatologId);
+        dbb.zatvoriKonekciju();
+        
+        return pomocnici;
     }
     
     

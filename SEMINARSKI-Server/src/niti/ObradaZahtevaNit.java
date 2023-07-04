@@ -4,13 +4,18 @@
  */
 package niti;
 
+import domen.Pacijent;
+import domen.Pomocnik;
+import domen.Stomatolog;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import konstante.Operacije;
+import logika.Kontroler;
 import transfer.KlijentskiZahtev;
 import transfer.ServerskiOdgovor;
 
@@ -33,6 +38,18 @@ public class ObradaZahtevaNit extends Thread {
             
             switch (kz.getOperacija()) {
                 case Operacije.LOGIN:
+                    Stomatolog sLogin = (Stomatolog) kz.getParametar();
+                    Stomatolog stomatolog = Kontroler.getInstance().vratiPrijavljenogStomatologa(sLogin);
+                    so.setOdgovor(stomatolog);
+                    break;
+                case Operacije.VRATI_PACIJENTE:
+                    ArrayList<Pacijent> pacijenti = Kontroler.getInstance().vratiPacijente();
+                    so.setOdgovor(pacijenti);
+                    break;
+                case Operacije.VRATI_POMOCNIKE_ZA_STOMATOLOGA:
+                    int stomatologId = (int) kz.getParametar();
+                    ArrayList<Pomocnik> pomocnici = Kontroler.getInstance().vratiPomocnikeZaStomatologa(stomatologId);
+                    so.setOdgovor(pomocnici);
                     break;
             }
             

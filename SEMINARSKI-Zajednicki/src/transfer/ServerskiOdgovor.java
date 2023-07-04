@@ -4,11 +4,13 @@
  */
 package transfer;
 
+import java.io.Serializable;
+
 /**
  *
  * @author dimit
  */
-public class ServerskiOdgovor {
+public class ServerskiOdgovor implements Serializable {
     private Object odgovor;
     private String poruka;
 

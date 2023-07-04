@@ -18,6 +18,7 @@ public class ServerskaForma extends javax.swing.JFrame {
      */
     public ServerskaForma() {
         initComponents();
+        setLocationRelativeTo(null);
         pzn = new PokretanjeServeraNit();
         pzn.start();
     }
@@ -31,77 +32,21 @@ public class ServerskaForma extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pokreniServerButton = new javax.swing.JButton();
-        zaustaviServerButton = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        stanjeServeraLbl = new javax.swing.JLabel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        pokreniServerButton.setText("Pokreni Server");
-        pokreniServerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pokreniServerButtonActionPerformed(evt);
-            }
-        });
-
-        zaustaviServerButton.setText("Zaustavi Server");
-        zaustaviServerButton.setEnabled(false);
-        zaustaviServerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                zaustaviServerButtonActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Stanje servera:");
-
-        stanjeServeraLbl.setText("Server nije pokrenut!");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(pokreniServerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(zaustaviServerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stanjeServeraLbl))
-                .addContainerGap())
+            .addGap(0, 318, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pokreniServerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(zaustaviServerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(stanjeServeraLbl))
-                .addContainerGap(30, Short.MAX_VALUE))
+            .addGap(0, 112, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void zaustaviServerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zaustaviServerButtonActionPerformed
-        pzn.zaustaviServer();
-        pokreniServerButton.setEnabled(true);
-        zaustaviServerButton.setEnabled(false);
-        stanjeServeraLbl.setText("Server je zaustavljen!");
-    }//GEN-LAST:event_zaustaviServerButtonActionPerformed
-
-    private void pokreniServerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pokreniServerButtonActionPerformed
-        pzn.pokreniServer();
-        zaustaviServerButton.setEnabled(true);
-        pokreniServerButton.setEnabled(false);
-        stanjeServeraLbl.setText("Server je pokrenut!");
-    }//GEN-LAST:event_pokreniServerButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -139,9 +84,5 @@ public class ServerskaForma extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton pokreniServerButton;
-    private javax.swing.JLabel stanjeServeraLbl;
-    private javax.swing.JButton zaustaviServerButton;
     // End of variables declaration//GEN-END:variables
 }

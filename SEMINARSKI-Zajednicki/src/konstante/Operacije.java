@@ -10,4 +10,6 @@ package konstante;
  */
 public interface Operacije {
     public static int LOGIN = 1;
+    public static int VRATI_PACIJENTE = 2;
+    public static int VRATI_POMOCNIKE_ZA_STOMATOLOGA = 3;
 }

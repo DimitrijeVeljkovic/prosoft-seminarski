@@ -15,14 +15,15 @@ import java.util.logging.Logger;
  * @author dimit
  */
 public class PokretanjeServeraNit extends Thread {
-    ServerSocket ss;
 
     @Override
     public void run() {
         try {
-            while (ss != null) {
+            ServerSocket ss = new ServerSocket(9000);
+            System.out.println("Server je pokrenut!");
+            
+            while (true) {
                 Socket s = ss.accept();
-                System.out.println("Klijent se povezao!");
                 ObradaZahtevaNit ozn = new ObradaZahtevaNit(s);
                 ozn.start();
             }
@@ -30,25 +31,4 @@ public class PokretanjeServeraNit extends Thread {
             Logger.getLogger(PokretanjeServeraNit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void zaustaviServer() {
-        try {
-            ss.close();
-            ss = null;
-            System.out.println("Server je zaustavljen!");
-        } catch (IOException ex) {
-            Logger.getLogger(PokretanjeServeraNit.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void pokreniServer() {
-        try {
-            ss = new ServerSocket(9000);
-            System.out.println("Server je pokrenut!");
-        } catch (IOException ex) {
-            Logger.getLogger(PokretanjeServeraNit.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    
 }
