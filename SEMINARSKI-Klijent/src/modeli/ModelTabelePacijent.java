@@ -48,4 +48,8 @@ public class ModelTabelePacijent extends AbstractTableModel {
         pacijenti = p;
         fireTableDataChanged();
     }
+    
+    public Pacijent nadjiPacijenta(int red) {
+        return pacijenti.get(red);
+    }
 }

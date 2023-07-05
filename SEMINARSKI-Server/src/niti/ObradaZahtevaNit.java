@@ -6,6 +6,7 @@ package niti;
 
 import domen.Pacijent;
 import domen.Pomocnik;
+import domen.StavkaCenovnika;
 import domen.Stomatolog;
 import helperi.PretragaPomocnika;
 import java.io.IOException;
@@ -76,6 +77,10 @@ public class ObradaZahtevaNit extends Thread {
                     Pomocnik pomocnikZaBrisanje = (Pomocnik) kz.getParametar();
                     boolean uspesnoObrisanPomocnik = Kontroler.getInstance().obrisiPomocnika(pomocnikZaBrisanje);
                     so.setOdgovor(uspesnoObrisanPomocnik);
+                    break;
+                case Operacije.VRATI_CENE:
+                    ArrayList<StavkaCenovnika> stavkeCenovnika = Kontroler.getInstance().vratiStavkeCenovnika();
+                    so.setOdgovor(stavkeCenovnika);
                     break;
             }
             

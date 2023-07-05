@@ -62,6 +62,9 @@ public class KlijentskaForma extends javax.swing.JFrame {
         pretraziPomocnikeButton = new javax.swing.JButton();
         dodajPomocnikaButton = new javax.swing.JButton();
         obrisiPomocnikaButton = new javax.swing.JButton();
+        kreirajRacunButton = new javax.swing.JButton();
+        azurirajCenovnikButton = new javax.swing.JButton();
+        zakaziUsluguButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -202,21 +205,48 @@ public class KlijentskaForma extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        kreirajRacunButton.setText("Kreiraj racun");
+        kreirajRacunButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kreirajRacunButtonActionPerformed(evt);
+            }
+        });
+
+        azurirajCenovnikButton.setText("Azuriraj cenovnik");
+        azurirajCenovnikButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                azurirajCenovnikButtonActionPerformed(evt);
+            }
+        });
+
+        zakaziUsluguButton.setText("Zakazi uslugu");
+        zakaziUsluguButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                zakaziUsluguButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(prijavljeniStomatologLbl)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(kreirajRacunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(zakaziUsluguButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(azurirajCenovnikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -230,7 +260,12 @@ public class KlijentskaForma extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(kreirajRacunButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(azurirajCenovnikButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(zakaziUsluguButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -307,7 +342,34 @@ public class KlijentskaForma extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_obrisiPomocnikaButtonActionPerformed
 
+    private void kreirajRacunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kreirajRacunButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_kreirajRacunButtonActionPerformed
+
+    private void azurirajCenovnikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_azurirajCenovnikButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_azurirajCenovnikButtonActionPerformed
+
+    private void zakaziUsluguButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zakaziUsluguButtonActionPerformed
+        int redPomocnik = pomocniciTbl.getSelectedRow();
+        int redPacijent = pacijentiTbl.getSelectedRow();
+        
+        if (redPomocnik == -1 || redPacijent == -1) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zakaze uslugu! Moraju biti selektovan jedan pacijent i jedan pomocnik!");
+            return;
+        }
+        
+        Pomocnik pomocnik = ((ModelTabelePomocnik) pomocniciTbl.getModel()).nadjiPomocnika(redPomocnik);
+        Pacijent pacijent = ((ModelTabelePacijent) pacijentiTbl.getModel()).nadjiPacijenta(redPacijent);
+        
+        ZakazivanjeUslugeForma zuf = new ZakazivanjeUslugeForma(this, false);
+        zuf.setVisible(true);
+        
+        zuf.postaviAktere(stomatolog, pacijent, pomocnik);
+    }//GEN-LAST:event_zakaziUsluguButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton azurirajCenovnikButton;
     private javax.swing.JButton dodajPacijentaButton;
     private javax.swing.JButton dodajPomocnikaButton;
     private javax.swing.JLabel jLabel1;
@@ -315,6 +377,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton kreirajRacunButton;
     private javax.swing.JButton obrisiPomocnikaButton;
     private javax.swing.JTable pacijentiTbl;
     private javax.swing.JTable pomocniciTbl;
@@ -323,6 +386,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
     private javax.swing.JButton pretraziPomocnikeButton;
     private javax.swing.JTextField pretraziPomocnikeTxt;
     private javax.swing.JLabel prijavljeniStomatologLbl;
+    private javax.swing.JButton zakaziUsluguButton;
     // End of variables declaration//GEN-END:variables
 
     private void srediTabeluPomocnici() {

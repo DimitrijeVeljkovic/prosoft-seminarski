@@ -47,6 +47,11 @@ public class Pacijent implements Serializable {
     public void setIme(String ime) {
         this.ime = ime;
     }
+
+    @Override
+    public String toString() {
+        return this.ime + " " + this.prezime;
+    }
     
     
 }

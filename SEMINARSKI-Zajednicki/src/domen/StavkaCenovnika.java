@@ -57,6 +57,11 @@ public class StavkaCenovnika implements Serializable {
     public void setCena(double cena) {
         this.cena = cena;
     }
+
+    @Override
+    public String toString() {
+        return this.cena + " " + this.novcanaJedinica;
+    }
     
     
 }

@@ -6,6 +6,7 @@ package baza;
 
 import domen.Pacijent;
 import domen.Pomocnik;
+import domen.StavkaCenovnika;
 import domen.Stomatolog;
 import helperi.PretragaPomocnika;
 import java.sql.Connection;
@@ -211,5 +212,34 @@ public class DBBroker {
         ps.setInt(1, pomocnikZaBrisanje.getPomocnikId());
         
         ps.executeUpdate();
+    }
+
+    public ArrayList<StavkaCenovnika> vratiStavkeCenovnika() {
+        String upit = "SELECT sc.stavkaCenovnikaId, sc.cenovnikId, sc.cena, sc.novcanaJedinica\n" +
+                      "FROM stavka_cenovnika AS sc INNER JOIN (SELECT cenovnikId, datumAzuriranja \n" +
+                                                              "FROM cenovnik \n" +
+                                                              "ORDER BY datumAzuriranja DESC \n" +
+                                                              "LIMIT 1) AS c ON sc.cenovnikId = c.cenovnikId;";
+        ArrayList<StavkaCenovnika> stavkeCenovnika = new ArrayList<>();
+        
+        try {
+            Statement s = konekcija.createStatement();
+            ResultSet rs = s.executeQuery(upit);
+            
+            while (rs.next()) {
+                stavkeCenovnika.add(
+                        new StavkaCenovnika(
+                                rs.getInt("sc.stavkaCenovnikaId"),
+                                null,
+                                rs.getDouble("sc.cena"),
+                                rs.getString("sc.novcanaJedinica")
+                        )
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return stavkeCenovnika;
     }
 }

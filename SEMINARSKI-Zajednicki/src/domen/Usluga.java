@@ -17,19 +17,17 @@ public class Usluga implements Serializable {
     private Date datum;
     private String naziv;
     private Pomocnik pomocnik;
-    private StavkaRacuna stavkaRacuna;
     private StavkaCenovnika stavkaCenovnika;
 
     public Usluga() {
     }
 
-    public Usluga(Stomatolog stomatolog, Pacijent pacijent, Date datum, String naziv, Pomocnik pomocnik, StavkaRacuna stavkaRacuna, StavkaCenovnika stavkaCenovnika) {
+    public Usluga(Stomatolog stomatolog, Pacijent pacijent, Date datum, String naziv, Pomocnik pomocnik, StavkaCenovnika stavkaCenovnika) {
         this.stomatolog = stomatolog;
         this.pacijent = pacijent;
         this.datum = datum;
         this.naziv = naziv;
         this.pomocnik = pomocnik;
-        this.stavkaRacuna = stavkaRacuna;
         this.stavkaCenovnika = stavkaCenovnika;
     }
 
@@ -80,14 +78,5 @@ public class Usluga implements Serializable {
     public void setPomocnik(Pomocnik pomocnik) {
         this.pomocnik = pomocnik;
     }
-
-    public StavkaRacuna getStavkaRacuna() {
-        return stavkaRacuna;
-    }
-
-    public void setStavkaRacuna(StavkaRacuna stavkaRacuna) {
-        this.stavkaRacuna = stavkaRacuna;
-    }
-    
     
 }

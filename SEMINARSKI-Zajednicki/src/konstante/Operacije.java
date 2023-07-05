@@ -17,4 +17,5 @@ public interface Operacije {
     public static int UNESI_PACIJENTA = 6;
     public static int UNESI_POMOCNIKA = 7;
     public static int OBRISI_POMOCNIKA = 8;
+    public static int VRATI_CENE = 9;
 }

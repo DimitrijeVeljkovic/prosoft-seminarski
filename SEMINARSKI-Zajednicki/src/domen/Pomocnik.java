@@ -68,5 +68,8 @@ public class Pomocnik implements Serializable {
         this.jmbg = jmbg;
     }
     
-    
+    @Override
+    public String toString() {
+        return this.ime + " " + this.prezime;
+    }
 }

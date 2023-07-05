@@ -7,6 +7,7 @@ package logika;
 import baza.DBBroker;
 import domen.Pacijent;
 import domen.Pomocnik;
+import domen.StavkaCenovnika;
 import domen.Stomatolog;
 import helperi.PretragaPomocnika;
 import java.sql.SQLException;
@@ -130,6 +131,15 @@ public class Kontroler {
         dbb.zatvoriKonekciju();
         
         return uspesno;
+    }
+
+    public ArrayList<StavkaCenovnika> vratiStavkeCenovnika() {
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        ArrayList<StavkaCenovnika> stavkeCenovnika = dbb.vratiStavkeCenovnika();
+        dbb.zatvoriKonekciju();
+        
+        return stavkeCenovnika;
     }
     
     

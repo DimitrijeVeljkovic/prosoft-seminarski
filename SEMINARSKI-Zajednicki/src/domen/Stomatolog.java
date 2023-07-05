@@ -68,5 +68,8 @@ public class Stomatolog implements Serializable {
         this.korisnickoIme = korisnickoIme;
     }
     
-    
+    @Override
+    public String toString() {
+        return this.ime + " " + this.prezime;
+    }
 }
