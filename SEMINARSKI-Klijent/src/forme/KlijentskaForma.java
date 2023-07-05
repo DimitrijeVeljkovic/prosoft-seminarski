@@ -153,8 +153,18 @@ public class KlijentskaForma extends javax.swing.JFrame {
         });
 
         dodajPomocnikaButton.setText("Dodaj pomocnika");
+        dodajPomocnikaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dodajPomocnikaButtonActionPerformed(evt);
+            }
+        });
 
         obrisiPomocnikaButton.setText("Obrisi pomocnika");
+        obrisiPomocnikaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                obrisiPomocnikaButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -267,6 +277,36 @@ public class KlijentskaForma extends javax.swing.JFrame {
         pd.setVisible(true);
     }//GEN-LAST:event_dodajPacijentaButtonActionPerformed
 
+    private void dodajPomocnikaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dodajPomocnikaButtonActionPerformed
+        PomocnikDialog pd = new PomocnikDialog(this, false);
+        pd.setVisible(true);
+        pd.postaviStomatologa(stomatolog);
+    }//GEN-LAST:event_dodajPomocnikaButtonActionPerformed
+
+    private void obrisiPomocnikaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_obrisiPomocnikaButtonActionPerformed
+        int redUTabeli = pomocniciTbl.getSelectedRow();
+        
+        if (redUTabeli == -1) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise pomocnika! Pomocnik mora biti selektovan u tabeli!");
+            return;
+        }
+        
+        Pomocnik pomocnik = ((ModelTabelePomocnik) pomocniciTbl.getModel()).nadjiPomocnika(redUTabeli);
+        
+        KlijentskiZahtev kz = new KlijentskiZahtev(Operacije.OBRISI_POMOCNIKA, pomocnik);
+        Komunikacija.getInstance().posaljiZahtev(kz);
+        ServerskiOdgovor so = Komunikacija.getInstance().primiOdgovor();
+        
+        boolean uspesnoObrisan = (boolean) so.getOdgovor();
+        
+        if (uspesnoObrisan) {
+            JOptionPane.showMessageDialog(this, "Sistem je obrisao pomocnika!");
+            popuniTabeluPomocnici();
+        } else {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise pomocnika!");
+        }
+    }//GEN-LAST:event_obrisiPomocnikaButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton dodajPacijentaButton;
     private javax.swing.JButton dodajPomocnikaButton;
@@ -295,7 +335,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
         pacijentiTbl.setModel(mt);
     }
 
-    private void popuniTabeluPacijenti() {
+    public void popuniTabeluPacijenti() {
         KlijentskiZahtev kz = new KlijentskiZahtev(Operacije.VRATI_PACIJENTE, null);
         Komunikacija.getInstance().posaljiZahtev(kz);
         ServerskiOdgovor so = Komunikacija.getInstance().primiOdgovor();
@@ -304,7 +344,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
         ((ModelTabelePacijent) pacijentiTbl.getModel()).postaviPacijente(pacijenti);
     }
 
-    private void popuniTabeluPomocnici() {
+    public void popuniTabeluPomocnici() {
         KlijentskiZahtev kz = new KlijentskiZahtev(Operacije.VRATI_POMOCNIKE_ZA_STOMATOLOGA, stomatolog.getStomatologId());
         Komunikacija.getInstance().posaljiZahtev(kz);
         ServerskiOdgovor so = Komunikacija.getInstance().primiOdgovor();

@@ -9,7 +9,10 @@ import domen.Pacijent;
 import domen.Pomocnik;
 import domen.Stomatolog;
 import helperi.PretragaPomocnika;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -73,6 +76,60 @@ public class Kontroler {
         dbb.zatvoriKonekciju();
         
         return pomocnici;
+    }
+
+    public boolean unesiPacijenta(Pacijent pacijent) {
+        boolean uspesno = false;
+        
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        try {
+            dbb.unesiPacijenta(pacijent);
+            dbb.commit();
+            uspesno = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Kontroler.class.getName()).log(Level.SEVERE, null, ex);
+            dbb.rollback();
+        }
+        dbb.zatvoriKonekciju();
+        
+        return uspesno;
+    }
+
+    public boolean unesiPomocnika(Pomocnik pomocnik) {
+        boolean uspesno = false;
+        
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        try {
+            dbb.unesiPomocnika(pomocnik);
+            dbb.commit();
+            uspesno = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Kontroler.class.getName()).log(Level.SEVERE, null, ex);
+            dbb.rollback();
+        }
+        dbb.zatvoriKonekciju();
+        
+        return uspesno;
+    }
+
+    public boolean obrisiPomocnika(Pomocnik pomocnikZaBrisanje) {
+        boolean uspesno = false;
+        
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        try {
+            dbb.obrisiPomocnika(pomocnikZaBrisanje);
+            dbb.commit();
+            uspesno = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Kontroler.class.getName()).log(Level.SEVERE, null, ex);
+            dbb.rollback();
+        }
+        dbb.zatvoriKonekciju();
+        
+        return uspesno;
     }
     
     

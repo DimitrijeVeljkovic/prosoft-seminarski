@@ -4,7 +4,7 @@
  */
 package forme;
 
-import domen.Pacijent;
+import domen.Pomocnik;
 import domen.Stomatolog;
 import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
@@ -16,13 +16,14 @@ import transfer.ServerskiOdgovor;
  *
  * @author dimit
  */
-public class PacijentDialog extends javax.swing.JDialog {
+public class PomocnikDialog extends javax.swing.JDialog {
+    Stomatolog stomatolog;
     KlijentskaForma kf;
 
     /**
-     * Creates new form PacijentDialog
+     * Creates new form PomocnikDialog
      */
-    public PacijentDialog(java.awt.Frame parent, boolean modal) {
+    public PomocnikDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         kf = (KlijentskaForma) parent;
         initComponents();
@@ -39,24 +40,28 @@ public class PacijentDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        imeTxt = new javax.swing.JTextField();
-        prezimeTxt = new javax.swing.JTextField();
+        imePomocnikaTxt = new javax.swing.JTextField();
+        prezimePomocnikaTxt = new javax.swing.JTextField();
+        jmbgPomocnikaTxt = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        dodajPacijentaButton = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        dodajPomocnikaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dodaj novog pacijenta"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Dodaj novog pomocnika")));
 
         jLabel1.setText("Ime:");
 
         jLabel2.setText("Prezime:");
 
-        dodajPacijentaButton.setText("Dodaj pacijenta");
-        dodajPacijentaButton.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setText("JMBG:");
+
+        dodajPomocnikaButton.setText("Dodaj pomocnika");
+        dodajPomocnikaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dodajPacijentaButtonActionPerformed(evt);
+                dodajPomocnikaButtonActionPerformed(evt);
             }
         });
 
@@ -69,30 +74,38 @@ public class PacijentDialog extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                        .addComponent(imeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(imePomocnikaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                        .addComponent(prezimePomocnikaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(dodajPacijentaButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(prezimeTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))))
+                            .addComponent(dodajPomocnikaButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jmbgPomocnikaTxt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(imeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(imePomocnikaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(prezimeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(prezimePomocnikaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dodajPacijentaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jmbgPomocnikaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(dodajPomocnikaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -115,40 +128,53 @@ public class PacijentDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void dodajPacijentaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dodajPacijentaButtonActionPerformed
-        String ime = imeTxt.getText();
-        String prezime = prezimeTxt.getText();
+    private void dodajPomocnikaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dodajPomocnikaButtonActionPerformed
+        String ime = imePomocnikaTxt.getText();
+        String prezime = prezimePomocnikaTxt.getText();
+        String jmbg = jmbgPomocnikaTxt.getText();
         
-        if ("".equals(ime) || "".equals(prezime)) {
-            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti pacijenta! Polja za ime i prezime su obavezna!");
+        if ("".equals(ime) || "".equals(prezime) || "".equals(jmbg)) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti pomocnika! Sva polja su obavezna!");
             return;
         }
         
-        Pacijent pacijent = new Pacijent(-1, ime, prezime);
+        if (!jmbg.matches("^(\\d{13})$")) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti pomocnika! JMBG mora imati 13 cifara!");
+            return;
+        }
         
-        KlijentskiZahtev kz = new KlijentskiZahtev(Operacije.UNESI_PACIJENTA, pacijent);
+        Pomocnik pomocnik = new Pomocnik(-1, ime, prezime, jmbg, stomatolog);
+        
+        KlijentskiZahtev kz = new KlijentskiZahtev(Operacije.UNESI_POMOCNIKA, pomocnik);
         Komunikacija.getInstance().posaljiZahtev(kz);
         ServerskiOdgovor so = Komunikacija.getInstance().primiOdgovor();
         
         boolean uspesnoUnesen = (boolean) so.getOdgovor();
         
         if (uspesnoUnesen) {
-            JOptionPane.showMessageDialog(this, "Sistem je zapamtio pacijenta!");
-            kf.popuniTabeluPacijenti();
-            imeTxt.setText("");
-            prezimeTxt.setText("");
+            JOptionPane.showMessageDialog(this, "Sistem je zapamtio pomocnika!");
+            kf.popuniTabeluPomocnici();
+            imePomocnikaTxt.setText("");
+            prezimePomocnikaTxt.setText("");
+            jmbgPomocnikaTxt.setText("");
         } else {
-            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti pacijenta!");
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti pomocnika!");
         }
-    }//GEN-LAST:event_dodajPacijentaButtonActionPerformed
+    }//GEN-LAST:event_dodajPomocnikaButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton dodajPacijentaButton;
-    private javax.swing.JTextField imeTxt;
+    private javax.swing.JButton dodajPomocnikaButton;
+    private javax.swing.JTextField imePomocnikaTxt;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField prezimeTxt;
+    private javax.swing.JTextField jmbgPomocnikaTxt;
+    private javax.swing.JTextField prezimePomocnikaTxt;
     // End of variables declaration//GEN-END:variables
+
+    void postaviStomatologa(Stomatolog s) {
+        stomatolog = s;
+    }
 }

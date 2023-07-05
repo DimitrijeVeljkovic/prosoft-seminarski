@@ -48,5 +48,9 @@ public class ModelTabelePomocnik extends AbstractTableModel {
         pomocnici = p;
         fireTableDataChanged();
     }
+
+    public Pomocnik nadjiPomocnika(int red) {
+        return pomocnici.get(red);
+    }
     
 }

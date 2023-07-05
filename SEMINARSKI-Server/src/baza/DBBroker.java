@@ -181,4 +181,35 @@ public class DBBroker {
         
         return pomocnici;
     }
+
+    public void unesiPacijenta(Pacijent pacijent) throws SQLException {
+        String upit = "INSERT INTO Pacijent (ime, prezime) VALUES (?, ?)";
+        PreparedStatement ps = konekcija.prepareStatement(upit);
+        
+        ps.setString(1, pacijent.getIme());
+        ps.setString(2, pacijent.getPrezime());
+        
+        ps.executeUpdate();
+    }
+
+    public void unesiPomocnika(Pomocnik pomocnik) throws SQLException {
+        String upit = "INSERT INTO Pomocnik (ime, prezime, jmbg, stomatologId) VALUES (?, ?, ?, ?)";
+        PreparedStatement ps = konekcija.prepareStatement(upit);
+        
+        ps.setString(1, pomocnik.getIme());
+        ps.setString(2, pomocnik.getPrezime());
+        ps.setString(3, pomocnik.getJmbg());
+        ps.setInt(4, pomocnik.getStomatolog().getStomatologId());
+        
+        ps.executeUpdate();
+    }
+
+    public void obrisiPomocnika(Pomocnik pomocnikZaBrisanje) throws SQLException {
+        String upit = "DELETE FROM Pomocnik WHERE pomocnikId = ?";
+        PreparedStatement ps = konekcija.prepareStatement(upit);
+        
+        ps.setInt(1, pomocnikZaBrisanje.getPomocnikId());
+        
+        ps.executeUpdate();
+    }
 }

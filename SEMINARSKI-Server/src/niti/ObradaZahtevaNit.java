@@ -62,6 +62,21 @@ public class ObradaZahtevaNit extends Thread {
                     ArrayList<Pomocnik> pomocniciPretraga = Kontroler.getInstance().pretraziPomocnike(pp);
                     so.setOdgovor(pomocniciPretraga);
                     break;
+                case Operacije.UNESI_PACIJENTA:
+                    Pacijent pacijent = (Pacijent) kz.getParametar();
+                    boolean uspesnoPacijent = Kontroler.getInstance().unesiPacijenta(pacijent);
+                    so.setOdgovor(uspesnoPacijent);
+                    break;
+                case Operacije.UNESI_POMOCNIKA:
+                    Pomocnik pomocnik = (Pomocnik) kz.getParametar();
+                    boolean uspesnoPomocnik = Kontroler.getInstance().unesiPomocnika(pomocnik);
+                    so.setOdgovor(uspesnoPomocnik);
+                    break;
+                case Operacije.OBRISI_POMOCNIKA:
+                    Pomocnik pomocnikZaBrisanje = (Pomocnik) kz.getParametar();
+                    boolean uspesnoObrisanPomocnik = Kontroler.getInstance().obrisiPomocnika(pomocnikZaBrisanje);
+                    so.setOdgovor(uspesnoObrisanPomocnik);
+                    break;
             }
             
             posaljiOdgovor(so);

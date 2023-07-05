@@ -251,11 +251,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Dodaj pomocnika"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dodajPomocnikaButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="obrisiPomocnikaButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Obrisi pomocnika"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="obrisiPomocnikaButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
