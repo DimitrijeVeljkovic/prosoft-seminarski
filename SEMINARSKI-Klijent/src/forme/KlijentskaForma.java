@@ -343,7 +343,19 @@ public class KlijentskaForma extends javax.swing.JFrame {
     }//GEN-LAST:event_obrisiPomocnikaButtonActionPerformed
 
     private void kreirajRacunButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kreirajRacunButtonActionPerformed
-        // TODO add your handling code here:
+        int redPacijent = pacijentiTbl.getSelectedRow();
+        
+        if (redPacijent == -1) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da kreira racun! Mora biti selektovan pacijent u tabeli!");
+            return;
+        }
+        
+        KreiranjeRacunaDialog krd = new KreiranjeRacunaDialog(this, false);
+        krd.setVisible(true);
+        
+        Pacijent pacijent = ((ModelTabelePacijent) pacijentiTbl.getModel()).nadjiPacijenta(redPacijent);
+        
+        krd.postaviStomatologaIPacijenta(stomatolog, pacijent);
     }//GEN-LAST:event_kreirajRacunButtonActionPerformed
 
     private void azurirajCenovnikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_azurirajCenovnikButtonActionPerformed

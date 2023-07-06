@@ -6,10 +6,15 @@ package baza;
 
 import domen.Pacijent;
 import domen.Pomocnik;
+import domen.Racun;
 import domen.StavkaCenovnika;
+import domen.StavkaRacuna;
 import domen.Stomatolog;
 import domen.Usluga;
+import helperi.GrupisanaUsluga;
+import helperi.PomocniRacun;
 import helperi.PretragaPomocnika;
+import helperi.PretragaUsluga;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -278,6 +283,58 @@ public class DBBroker {
         ps.setString(2, stavkaCenovnika.getNaziv());
         ps.setDouble(3, stavkaCenovnika.getCena());
         ps.setString(4, stavkaCenovnika.getNovcanaJedinica());
+        
+        ps.executeUpdate();
+    }
+
+    public ArrayList<GrupisanaUsluga> vratiUslugeGrupisano(PretragaUsluga pu) {
+        String upit = "SELECT s.naziv, SUM(s.cena) as iznos, COUNT(u.uslugaId) as kolicina "
+                    + "FROM usluga u INNER JOIN stavka_cenovnika s ON u.stavkaCenovnikaId = s.stavkaCenovnikaId "
+                    + "WHERE u.stomatologId = ? AND u.pacijentId = ? "
+                    + "GROUP BY s.stavkaCenovnikaId";
+        ArrayList<GrupisanaUsluga> usluge = new ArrayList<>();
+        
+        try {
+            PreparedStatement ps = konekcija.prepareStatement(upit);
+            ps.setInt(1, pu.getStomatologId());
+            ps.setInt(2, pu.getPacijentId());
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                GrupisanaUsluga u = new GrupisanaUsluga(
+                        rs.getString("s.naziv"),
+                        rs.getDouble("iznos"),
+                        rs.getInt("kolicina")
+                );
+                usluge.add(u);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return usluge;
+    };
+
+    public void unesiRacun(Racun racun) throws SQLException {
+        String upit = "INSERT INTO racun (racunId, datumIzdavanja, ukupanIznos, stomatologId, pacijentId) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement ps = konekcija.prepareStatement(upit);
+        
+        ps.setInt(1, racun.getRacunId());
+        ps.setDate(2, new Date(racun.getDatumIzdavanja().getTime()));
+        ps.setDouble(3, racun.getUkupanIznos());
+        ps.setInt(4, racun.getStomatolog().getStomatologId());
+        ps.setInt(5, racun.getPacijent().getPacijentId());
+        
+        ps.executeUpdate();
+    };
+
+    public void unesiStavkuRacuna(StavkaRacuna stavka) throws SQLException {
+        String upit = "INSERT INTO stavka_racuna (racunId, iznos, kolicina) VALUES (?, ?, ?)";
+        PreparedStatement ps = konekcija.prepareStatement(upit);
+        
+        ps.setInt(1, stavka.getRacun().getRacunId());
+        ps.setDouble(2, stavka.getIznos());
+        ps.setInt(3, stavka.getKolicina());
         
         ps.executeUpdate();
     }

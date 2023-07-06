@@ -7,10 +7,15 @@ package logika;
 import baza.DBBroker;
 import domen.Pacijent;
 import domen.Pomocnik;
+import domen.Racun;
 import domen.StavkaCenovnika;
+import domen.StavkaRacuna;
 import domen.Stomatolog;
 import domen.Usluga;
+import helperi.GrupisanaUsluga;
+import helperi.PomocniRacun;
 import helperi.PretragaPomocnika;
+import helperi.PretragaUsluga;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -184,6 +189,50 @@ public class Kontroler {
         dbb.zatvoriKonekciju();
         
         return cenovnikAzuriran;
+    }
+
+    public ArrayList<GrupisanaUsluga> vratiUslugeGrupisano(PretragaUsluga pu) {
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        ArrayList<GrupisanaUsluga> usluge = dbb.vratiUslugeGrupisano(pu);
+        dbb.zatvoriKonekciju();
+        
+        return usluge;
+    }
+
+    public Racun unesiRacun(PomocniRacun pr) {
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        try {
+            int racunId = (int)(Math.random() * 1000000);
+            double ukupno = 0;
+            for (GrupisanaUsluga stavka : pr.getStavkeRacuna()) {
+                ukupno += stavka.getIznos();
+            }
+            Racun racun = new Racun(
+                    racunId,
+                    new java.util.Date(),
+                    ukupno,
+                    new Stomatolog(pr.getIds().getStomatologId(), "", "", "", ""), 
+                    new Pacijent(pr.getIds().getPacijentId(), "", "")
+            );
+            
+            dbb.unesiRacun(racun);
+            for (GrupisanaUsluga gu : pr.getStavkeRacuna()) {
+                StavkaRacuna stavka = new StavkaRacuna(-1, racun, gu.getIznos(), gu.getKolicina());
+                
+                dbb.unesiStavkuRacuna(stavka);
+            }
+            
+            dbb.commit();
+            dbb.zatvoriKonekciju();
+            return racun;
+        } catch (SQLException ex) {
+            Logger.getLogger(Kontroler.class.getName()).log(Level.SEVERE, null, ex);
+            dbb.rollback();
+            dbb.zatvoriKonekciju();
+            return null;
+        }
     }
     
     

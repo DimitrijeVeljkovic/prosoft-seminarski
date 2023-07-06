@@ -20,4 +20,6 @@ public interface Operacije {
     public static int VRATI_CENE = 9;
     public static int UNESI_USLUGU = 10;
     public static int AZURIRAJ_CENOVNIK = 11;
+    public static int VRATI_USLUGE_GRUPISANO = 12;
+    public static int UNESI_RACUN = 13;
 }

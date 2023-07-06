@@ -6,10 +6,14 @@ package niti;
 
 import domen.Pacijent;
 import domen.Pomocnik;
+import domen.Racun;
 import domen.StavkaCenovnika;
 import domen.Stomatolog;
 import domen.Usluga;
+import helperi.GrupisanaUsluga;
+import helperi.PomocniRacun;
 import helperi.PretragaPomocnika;
+import helperi.PretragaUsluga;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -92,6 +96,16 @@ public class ObradaZahtevaNit extends Thread {
                     ArrayList<StavkaCenovnika> noveStavkeCenovnika = (ArrayList<StavkaCenovnika>) kz.getParametar();
                     boolean cenovnikAzuriran = Kontroler.getInstance().azurirajCenovnik(noveStavkeCenovnika);
                     so.setOdgovor(cenovnikAzuriran);
+                    break;
+                case Operacije.VRATI_USLUGE_GRUPISANO:
+                    PretragaUsluga pu = (PretragaUsluga) kz.getParametar();
+                    ArrayList<GrupisanaUsluga> usluge = Kontroler.getInstance().vratiUslugeGrupisano(pu);
+                    so.setOdgovor(usluge);
+                    break;
+                case Operacije.UNESI_RACUN:
+                    PomocniRacun pr = (PomocniRacun) kz.getParametar();
+                    Racun racun = Kontroler.getInstance().unesiRacun(pr);
+                    so.setOdgovor(racun);
                     break;
             }
             
