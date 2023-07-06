@@ -14,19 +14,21 @@ import java.util.Date;
 public class Usluga implements Serializable {
     private Stomatolog stomatolog;
     private Pacijent pacijent;
+    private int uslugaId;
     private Date datum;
-    private String naziv;
+    private String opis;
     private Pomocnik pomocnik;
     private StavkaCenovnika stavkaCenovnika;
 
     public Usluga() {
     }
 
-    public Usluga(Stomatolog stomatolog, Pacijent pacijent, Date datum, String naziv, Pomocnik pomocnik, StavkaCenovnika stavkaCenovnika) {
+    public Usluga(Stomatolog stomatolog, Pacijent pacijent, int uslugaId, Date datum, String opis, Pomocnik pomocnik, StavkaCenovnika stavkaCenovnika) {
         this.stomatolog = stomatolog;
         this.pacijent = pacijent;
+        this.uslugaId = uslugaId;
         this.datum = datum;
-        this.naziv = naziv;
+        this.opis = opis;
         this.pomocnik = pomocnik;
         this.stavkaCenovnika = stavkaCenovnika;
     }
@@ -63,12 +65,12 @@ public class Usluga implements Serializable {
         this.datum = datum;
     }
 
-    public String getNaziv() {
-        return naziv;
+    public String getOpis() {
+        return opis;
     }
 
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
+    public void setOpis(String opis) {
+        this.opis = opis;
     }
 
     public Pomocnik getPomocnik() {
@@ -78,5 +80,14 @@ public class Usluga implements Serializable {
     public void setPomocnik(Pomocnik pomocnik) {
         this.pomocnik = pomocnik;
     }
+
+    public int getUslugaId() {
+        return uslugaId;
+    }
+
+    public void setUslugaId(int uslugaId) {
+        this.uslugaId = uslugaId;
+    }
+    
     
 }

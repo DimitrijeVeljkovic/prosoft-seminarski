@@ -5,7 +5,6 @@
 package modeli;
 
 import domen.Pacijent;
-import domen.Pomocnik;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 

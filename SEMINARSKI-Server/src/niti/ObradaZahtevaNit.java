@@ -8,6 +8,7 @@ import domen.Pacijent;
 import domen.Pomocnik;
 import domen.StavkaCenovnika;
 import domen.Stomatolog;
+import domen.Usluga;
 import helperi.PretragaPomocnika;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -81,6 +82,16 @@ public class ObradaZahtevaNit extends Thread {
                 case Operacije.VRATI_CENE:
                     ArrayList<StavkaCenovnika> stavkeCenovnika = Kontroler.getInstance().vratiStavkeCenovnika();
                     so.setOdgovor(stavkeCenovnika);
+                    break;
+                case Operacije.UNESI_USLUGU:
+                    Usluga usluga = (Usluga) kz.getParametar();
+                    boolean uslugaZapamcena = Kontroler.getInstance().unesiUslugu(usluga);
+                    so.setOdgovor(uslugaZapamcena);
+                    break;
+                case Operacije.AZURIRAJ_CENOVNIK:
+                    ArrayList<StavkaCenovnika> noveStavkeCenovnika = (ArrayList<StavkaCenovnika>) kz.getParametar();
+                    boolean cenovnikAzuriran = Kontroler.getInstance().azurirajCenovnik(noveStavkeCenovnika);
+                    so.setOdgovor(cenovnikAzuriran);
                     break;
             }
             

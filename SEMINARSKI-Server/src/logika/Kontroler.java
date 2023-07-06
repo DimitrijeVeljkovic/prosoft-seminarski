@@ -9,9 +9,11 @@ import domen.Pacijent;
 import domen.Pomocnik;
 import domen.StavkaCenovnika;
 import domen.Stomatolog;
+import domen.Usluga;
 import helperi.PretragaPomocnika;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -140,6 +142,48 @@ public class Kontroler {
         dbb.zatvoriKonekciju();
         
         return stavkeCenovnika;
+    }
+
+    public boolean unesiUslugu(Usluga usluga) {
+        boolean uslugaZapamcena = false;
+        
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        try {
+            dbb.unesiUslugu(usluga);
+            dbb.commit();
+            uslugaZapamcena = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Kontroler.class.getName()).log(Level.SEVERE, null, ex);
+            dbb.rollback();
+        }
+        dbb.zatvoriKonekciju();
+        
+        return uslugaZapamcena;
+    }
+
+    public boolean azurirajCenovnik(ArrayList<StavkaCenovnika> noveStavkeCenovnika) {
+        boolean cenovnikAzuriran = false;
+        
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        try {
+            int cenovnikId = (int)(Math.random() * 1000000);
+            
+            dbb.dodajNoviCenovnik(cenovnikId, new Date());
+            for (StavkaCenovnika stavkaCenovnika : noveStavkeCenovnika) {
+                dbb.dodajStavkuCenovnika(cenovnikId, stavkaCenovnika);
+            }
+            
+            dbb.commit();
+            cenovnikAzuriran = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Kontroler.class.getName()).log(Level.SEVERE, null, ex);
+            dbb.rollback();
+        } 
+        dbb.zatvoriKonekciju();
+        
+        return cenovnikAzuriran;
     }
     
     

@@ -8,8 +8,10 @@ import domen.Pacijent;
 import domen.Pomocnik;
 import domen.StavkaCenovnika;
 import domen.Stomatolog;
+import domen.Usluga;
 import helperi.PretragaPomocnika;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -215,7 +217,7 @@ public class DBBroker {
     }
 
     public ArrayList<StavkaCenovnika> vratiStavkeCenovnika() {
-        String upit = "SELECT sc.stavkaCenovnikaId, sc.cenovnikId, sc.cena, sc.novcanaJedinica\n" +
+        String upit = "SELECT sc.stavkaCenovnikaId, sc.cenovnikId, sc.naziv, sc.cena, sc.novcanaJedinica\n" +
                       "FROM stavka_cenovnika AS sc INNER JOIN (SELECT cenovnikId, datumAzuriranja \n" +
                                                               "FROM cenovnik \n" +
                                                               "ORDER BY datumAzuriranja DESC \n" +
@@ -231,6 +233,7 @@ public class DBBroker {
                         new StavkaCenovnika(
                                 rs.getInt("sc.stavkaCenovnikaId"),
                                 null,
+                                rs.getString("sc.naziv"),
                                 rs.getDouble("sc.cena"),
                                 rs.getString("sc.novcanaJedinica")
                         )
@@ -241,5 +244,41 @@ public class DBBroker {
         }
         
         return stavkeCenovnika;
+    }
+
+    public void unesiUslugu(Usluga usluga) throws SQLException {
+        String upit = "INSERT INTO Usluga (stomatologId, pacijentId, datum, opis, pomocnikId, stavkaCenovnikaId) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement ps = konekcija.prepareStatement(upit);
+        
+        ps.setInt(1, usluga.getStomatolog().getStomatologId());
+        ps.setInt(2, usluga.getPacijent().getPacijentId());
+        ps.setDate(3, new Date(usluga.getDatum().getTime()));
+        ps.setString(4, usluga.getOpis());
+        ps.setInt(5, usluga.getPomocnik().getPomocnikId());
+        ps.setInt(6, usluga.getStavkaCenovnika().getStavkaCenovnikaId());
+        
+        ps.executeUpdate();
+    }
+
+    public void dodajNoviCenovnik(int cenovnikId, java.util.Date trenutniDatum) throws SQLException {
+        String upit = "INSERT INTO Cenovnik (cenovnikId, datumAzuriranja) VALUES (?, ?)";
+        PreparedStatement ps = konekcija.prepareStatement(upit);
+        
+        ps.setInt(1, cenovnikId);
+        ps.setDate(2, new Date(trenutniDatum.getTime()));
+        
+        ps.executeUpdate();
+    }
+
+    public void dodajStavkuCenovnika(int cenovnikId, StavkaCenovnika stavkaCenovnika) throws SQLException {
+        String upit = "INSERT INTO stavka_cenovnika (cenovnikId, naziv, cena, novcanaJedinica) VALUES (?, ?, ?, ?)";
+        PreparedStatement ps = konekcija.prepareStatement(upit);
+        
+        ps.setInt(1, cenovnikId);
+        ps.setString(2, stavkaCenovnika.getNaziv());
+        ps.setDouble(3, stavkaCenovnika.getCena());
+        ps.setString(4, stavkaCenovnika.getNovcanaJedinica());
+        
+        ps.executeUpdate();
     }
 }

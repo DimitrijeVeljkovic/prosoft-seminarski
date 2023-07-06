@@ -8,7 +8,14 @@ import domen.Pacijent;
 import domen.Pomocnik;
 import domen.StavkaCenovnika;
 import domen.Stomatolog;
+import domen.Usluga;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import komunikacija.Komunikacija;
 import konstante.Operacije;
 import transfer.KlijentskiZahtev;
@@ -22,6 +29,7 @@ public class ZakazivanjeUslugeForma extends javax.swing.JDialog {
     Stomatolog stomatolog;
     Pacijent pacijent;
     Pomocnik pomocnik;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
     /**
      * Creates new form ZakazivanjeUslugeForma
@@ -51,13 +59,14 @@ public class ZakazivanjeUslugeForma extends javax.swing.JDialog {
         pacijentLbl = new javax.swing.JLabel();
         pomocnikLbl = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        nazivTxt = new javax.swing.JTextField();
         datumTxt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         cenaCmb = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
         zakaziUsluguButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        opisTxt = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -78,15 +87,21 @@ public class ZakazivanjeUslugeForma extends javax.swing.JDialog {
         pomocnikLbl.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         pomocnikLbl.setText("Ime i prezime pomocnika");
 
-        jLabel4.setText("Naziv usluge:");
+        jLabel4.setText("Opis usluge:");
+
+        datumTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                datumTxtActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Datum obavljanja usluge:");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel6.setText("DD/MM/YYY");
+        jLabel6.setText("dd/MM/yyyy hh:mm");
 
-        jLabel7.setText("Cena usluge:");
+        jLabel7.setText("Stavka cenovnika:");
 
         zakaziUsluguButton.setText("Zakazi uslugu");
         zakaziUsluguButton.addActionListener(new java.awt.event.ActionListener() {
@@ -94,6 +109,10 @@ public class ZakazivanjeUslugeForma extends javax.swing.JDialog {
                 zakaziUsluguButtonActionPerformed(evt);
             }
         });
+
+        opisTxt.setColumns(20);
+        opisTxt.setRows(5);
+        jScrollPane1.setViewportView(opisTxt);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -114,20 +133,23 @@ public class ZakazivanjeUslugeForma extends javax.swing.JDialog {
                             .addComponent(pacijentLbl)
                             .addComponent(stomatologLbl))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel6))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(106, 106, 106)
+                        .addComponent(jScrollPane1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(zakaziUsluguButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                            .addComponent(datumTxt, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(nazivTxt)
-                            .addComponent(cenaCmb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(zakaziUsluguButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cenaCmb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(datumTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -148,22 +170,21 @@ public class ZakazivanjeUslugeForma extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(nazivTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(datumTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cenaCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(zakaziUsluguButton, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -179,16 +200,45 @@ public class ZakazivanjeUslugeForma extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void zakaziUsluguButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zakaziUsluguButtonActionPerformed
-        
+        try {
+            String opis = opisTxt.getText();
+            StavkaCenovnika stavkaCenovnika = (StavkaCenovnika) cenaCmb.getSelectedItem();
+            Date datumObavljanja = sdf.parse(datumTxt.getText());
+            System.out.println(datumObavljanja);
+            if ("".equals(opis) || stavkaCenovnika == null) {
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti uslugu! Sva polja su obavezna!");
+                return;
+            }
+            
+            Usluga usluga = new Usluga(stomatolog, pacijent, -1, datumObavljanja, opis, pomocnik, stavkaCenovnika);
+            
+            KlijentskiZahtev kz = new KlijentskiZahtev(Operacije.UNESI_USLUGU, usluga);
+            Komunikacija.getInstance().posaljiZahtev(kz);
+            ServerskiOdgovor so = Komunikacija.getInstance().primiOdgovor();
+            
+            boolean uslugaZapamcena = (boolean) so.getOdgovor();
+            if (uslugaZapamcena) {
+                JOptionPane.showMessageDialog(this, "Sistem je zapamtio uslugu!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti uslugu!");
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(ZakazivanjeUslugeForma.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zapamti uslugu! Format datuma nije ispavan!");
+        }
     }//GEN-LAST:event_zakaziUsluguButtonActionPerformed
+
+    private void datumTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_datumTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_datumTxtActionPerformed
 
     void postaviAktere(Stomatolog stomatolog, Pacijent pacijent, Pomocnik pomocnik) {
         this.stomatolog = stomatolog;
@@ -210,8 +260,9 @@ public class ZakazivanjeUslugeForma extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField nazivTxt;
+    private javax.swing.JTextArea opisTxt;
     private javax.swing.JLabel pacijentLbl;
     private javax.swing.JLabel pomocnikLbl;
     private javax.swing.JLabel stomatologLbl;

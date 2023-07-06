@@ -347,7 +347,8 @@ public class KlijentskaForma extends javax.swing.JFrame {
     }//GEN-LAST:event_kreirajRacunButtonActionPerformed
 
     private void azurirajCenovnikButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_azurirajCenovnikButtonActionPerformed
-        // TODO add your handling code here:
+        PromenaCenovnikaDialog pcd = new PromenaCenovnikaDialog(this, false);
+        pcd.setVisible(true);
     }//GEN-LAST:event_azurirajCenovnikButtonActionPerformed
 
     private void zakaziUsluguButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zakaziUsluguButtonActionPerformed

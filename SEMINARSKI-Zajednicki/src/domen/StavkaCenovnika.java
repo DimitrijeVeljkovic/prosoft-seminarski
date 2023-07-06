@@ -13,15 +13,17 @@ import java.io.Serializable;
 public class StavkaCenovnika implements Serializable {
     private int stavkaCenovnikaId;
     private Cenovnik cenovnik;
+    private String naziv;
     private double cena;
     private String novcanaJedinica;
 
     public StavkaCenovnika() {
     }
 
-    public StavkaCenovnika(int stavkaCenovnikaId, Cenovnik cenovnik, double cena, String novcanaJedinica) {
+    public StavkaCenovnika(int stavkaCenovnikaId, Cenovnik cenovnik, String naziv, double cena, String novcanaJedinica) {
         this.stavkaCenovnikaId = stavkaCenovnikaId;
         this.cenovnik = cenovnik;
+        this.naziv = naziv;
         this.cena = cena;
         this.novcanaJedinica = novcanaJedinica;
     }
@@ -58,9 +60,17 @@ public class StavkaCenovnika implements Serializable {
         this.cena = cena;
     }
 
+    public String getNaziv() {
+        return naziv;
+    }
+
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
+    }
+
     @Override
     public String toString() {
-        return this.cena + " " + this.novcanaJedinica;
+        return this.naziv + " - " + this.cena + " " + this.novcanaJedinica;
     }
     
     
