@@ -69,8 +69,9 @@ public class ZakazivanjeUslugeForma extends javax.swing.JDialog {
         opisTxt = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Zakazivanje usluge");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Zakazivanje usluge"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Usluga"));
 
         jLabel1.setText("Stomatolog: ");
 

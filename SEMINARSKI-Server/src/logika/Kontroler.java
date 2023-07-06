@@ -234,6 +234,33 @@ public class Kontroler {
             return null;
         }
     }
+
+    public ArrayList<Stomatolog> vratiStomatologe() {
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        ArrayList<Stomatolog> stomatolozi = dbb.vratiStomatologe();
+        dbb.zatvoriKonekciju();
+        
+        return stomatolozi;
+    }
+
+    public boolean dodajStomatologa(Stomatolog s) {
+        boolean uspesno = false;
+        
+        dbb.ucitajDrajver();
+        dbb.otvoriKonekciju();
+        try {
+            dbb.dodajStomatologa(s);
+            dbb.commit();
+            uspesno = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Kontroler.class.getName()).log(Level.SEVERE, null, ex);
+            dbb.rollback();
+        }
+        dbb.zatvoriKonekciju();
+        
+        return uspesno;
+    }
     
     
 }

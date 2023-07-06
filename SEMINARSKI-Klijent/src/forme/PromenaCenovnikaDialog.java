@@ -48,8 +48,9 @@ public class PromenaCenovnikaDialog extends javax.swing.JDialog {
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Azuriranje cenovnika");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Azuriranje cenovnika"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cenovnik"));
 
         azurirajCenovnikButton.setText("Azuriraj cenovnik");
         azurirajCenovnikButton.addActionListener(new java.awt.event.ActionListener() {

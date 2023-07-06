@@ -338,4 +338,35 @@ public class DBBroker {
         
         ps.executeUpdate();
     }
+
+    public ArrayList<Stomatolog> vratiStomatologe() {
+        String upit = "SELECT ime, prezime, korisnickoIme FROM stomatolog";
+        ArrayList<Stomatolog> stomatolozi = new ArrayList<>();
+        
+        try {
+            Statement s = konekcija.createStatement();
+            ResultSet rs = s.executeQuery(upit);
+            
+            while (rs.next()) {
+                Stomatolog st = new Stomatolog(-1, rs.getString("ime"), rs.getString("prezime"), rs.getString("korisnickoIme"), "");
+                stomatolozi.add(st);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBBroker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return stomatolozi;
+    }
+
+    public void dodajStomatologa(Stomatolog s) throws SQLException {
+        String upit = "INSERT INTO stomatolog (ime, prezime, korisnickoIme, lozinka) VALUES (?, ?, ?, ?)";
+        PreparedStatement ps = konekcija.prepareStatement(upit);
+        
+        ps.setString(1, s.getIme());
+        ps.setString(2, s.getPrezime());
+        ps.setString(3, s.getKorisnickoIme());
+        ps.setString(4, s.getLozinka());
+        
+        ps.executeUpdate();
+    }
 }

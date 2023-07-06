@@ -67,6 +67,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
         zakaziUsluguButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Klijent");
 
         jLabel1.setText("Prijavljeni stomatolog: ");
 

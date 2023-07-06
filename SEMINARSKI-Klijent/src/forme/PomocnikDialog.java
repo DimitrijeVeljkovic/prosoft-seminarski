@@ -49,6 +49,7 @@ public class PomocnikDialog extends javax.swing.JDialog {
         dodajPomocnikaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Pomocnik");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Dodaj novog pomocnika")));
 

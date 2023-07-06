@@ -70,6 +70,7 @@ public class KreiranjeRacunaDialog extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Kreiranje racuna");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Odaberite stavke za kreiranje racuna"));
 
