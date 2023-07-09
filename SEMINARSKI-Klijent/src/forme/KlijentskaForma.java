@@ -369,7 +369,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
         int redPacijent = pacijentiTbl.getSelectedRow();
         
         if (redPomocnik == -1 || redPacijent == -1) {
-            JOptionPane.showMessageDialog(this, "Sistem ne moze da zakaze uslugu! Moraju biti selektovan jedan pacijent i jedan pomocnik!");
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da zakaze uslugu! Mora biti selektovan jedan pacijent i jedan pomocnik!");
             return;
         }
         
