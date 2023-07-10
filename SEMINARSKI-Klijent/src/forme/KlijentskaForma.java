@@ -31,7 +31,7 @@ public class KlijentskaForma extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         stomatolog = s;
-        prijavljeniStomatologLbl.setText(stomatolog.getIme() + " " + stomatolog.getPrezime());
+        prijavljeniStomatologLbl.setText(stomatolog.toString());
         srediTabeluPacijenti();
         srediTabeluPomocnici();
         popuniTabeluPacijenti();
